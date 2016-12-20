@@ -1,14 +1,4 @@
-# demo-energy-ev
-Demo showing EV charging station availability, pricing, and time charged
+# nomad-supply-chain-demo
+This is a demo to envision how nomad could provide additional meaning to the entire supply chain. 
 
-To run it first clone this repo.
-
-`npm install`
-
-Start these in different terminal windows
- 
-`ipfs daemon`
-
-`node server/server.js`
-
-`npm run start`
+This demo will be using 3 different particles that each have triggers. There is are nomad atomic nodes for each of the devices. There is a atomic node that takes the input from from sensors on a particle and then publishes it.
