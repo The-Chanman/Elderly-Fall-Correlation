@@ -18,7 +18,7 @@ const defaultPublishData = {
     apple: {}
   },
   [subscriptions[1]]: {
-    description: 'news related to Apple',    
+    description: 'Top news related to Apple from Google News',    
     apple: {},
     patents: {}
   }
@@ -29,14 +29,27 @@ class DataMaintainer {
   constructor(){
     this.data = defaultPublishData
   }
-  setValue(id, key, value){
-    let cleanedKey = this.cleanKey(key)
-    if(cleanedKey in this.data[id]){
-      this.data[id][cleanedKey].data = value.data
-      this.data[id][cleanedKey].time = value.time
-      this.data[id][cleanedKey].description = value.description
-    } else {
-      this.data[id][cleanedKey] = value
+  setValue(id, value){
+    switch(id){
+      case subscriptions[0]:{
+        this.data[id]["time"] = value.time
+        this.data[id]["apple"] = value.results[0]
+      }
+      case subscriptions[1]:{
+        let news = value.apple.items
+        let patents = []
+        let i = news.length
+        while (i--){
+          if(news[i].title.toLowerCase().includes("patent")){
+            patents.push(news.splice(i, 1))
+          }
+        }
+        this.data[id]["apple"] = news
+        this.data[id]["patents"] = patents
+      }
+      default:{
+        throw new DataSettingException("unrecognized id")
+      }
     }
   }
   cleanKey(key){
@@ -48,7 +61,7 @@ class DataMaintainer {
     return this.data
   }
   isAllFilled(){
-    return this.data[subscriptions[0]]['apple'] && this.data[subscriptions[0]]['time'] && this.data[subscriptions[1]]['sensor']["data"] && this.data[subscriptions[1]]['sensor']["time"]
+    return this.data[subscriptions[0]]['apple'] && this.data[subscriptions[0]]['time'] && this.data[subscriptions[1]]['apple']
   }
   clear(){
     this.data = defaultPublishData
@@ -78,11 +91,12 @@ nomad.prepareToPublish()
       let messageData = JSON.parse(message.message)
 
       try{
-        dataManager.setValue(message.id, Object.keys(messageData)[0],{data: messageData[Object.keys(messageData)[0]].data, time: messageData[Object.keys(messageData)[0]].time, description: messageData[Object.keys(messageData)[0]].description})
+        dataManager.setValue(message.id, messageData)
       }
       catch(err){
         console.log("DataMaintainer failed with error of " + err)
       }
+
       let currentTime = getTime()
       let timeSince = currentTime - lastPub
       if (timeSince >= frequency){
