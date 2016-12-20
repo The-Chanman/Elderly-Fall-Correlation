@@ -4,7 +4,7 @@ const moment = require('moment')
 const nomad = new Nomad()
 
 // subscription node ids
-const subscriptions = ['QmbBw8wZ379ksyAETJMFU2BptByeQoGPp1UrBPJdRN2dRc', 'QmcZt6n1KVPC4exrHtDW1R6U7MacGD92MQCUEpYVDq1GXL']
+const subscriptions = ['QmcWzGjo1Zu4yE9NtzBKXNJgEFcVWvgz1ipxtAhwWrvxX5', 'QmergwJPmTCEnUyR4gLrjzfKgeBixUbemqoFC78k6sbEZq']
 
 let instance, lastPub, notificationBody
 
@@ -13,18 +13,14 @@ const timeThreshold = 4 * 60 * 60 * 1000 // 4 hours
 
 const defaultPublishData = { 
   [subscriptions[0]]: {
-    sensor: {
-      data: '',
-      time: '',
-      description: '' 
-    }
+    time: '',
+    description: 'Quote for Apple stock' ,
+    apple: {}
   },
   [subscriptions[1]]: {
-    sensor: {
-      data: '',
-      time: '',
-      description: '' 
-    }
+    description: 'news related to Apple',    
+    apple: {},
+    patents: {}
   }
 }
 
@@ -52,7 +48,7 @@ class DataMaintainer {
     return this.data
   }
   isAllFilled(){
-    return this.data[subscriptions[0]]['sensor']["data"] && this.data[subscriptions[0]]['sensor']["time"] && this.data[subscriptions[1]]['sensor']["data"] && this.data[subscriptions[1]]['sensor']["time"]
+    return this.data[subscriptions[0]]['apple'] && this.data[subscriptions[0]]['time'] && this.data[subscriptions[1]]['sensor']["data"] && this.data[subscriptions[1]]['sensor']["time"]
   }
   clear(){
     this.data = defaultPublishData
@@ -77,9 +73,10 @@ nomad.prepareToPublish()
   .then(() => {
     lastPub = getTime()
     nomad.subscribe(subscriptions, function(message) {
-      console.log("Receieved a message for node " + message.id)
-      console.log("Message was " + message.message)
+      console.log("==========================> Receieved a message for node " + message.id)
+      console.log("==========================> Message was " + message.message)
       let messageData = JSON.parse(message.message)
+
       try{
         dataManager.setValue(message.id, Object.keys(messageData)[0],{data: messageData[Object.keys(messageData)[0]].data, time: messageData[Object.keys(messageData)[0]].time, description: messageData[Object.keys(messageData)[0]].description})
       }
@@ -90,22 +87,11 @@ nomad.prepareToPublish()
       let timeSince = currentTime - lastPub
       if (timeSince >= frequency){
         console.log('===================================> timeSince >= timeBetween')
-        let currentRecord = dataManager.getAll()
-        let sensorOneData = currentRecord[Object.keys(currentRecord)[0]]['sensor']["data"]
-        let sensorTwoData = currentRecord[Object.keys(currentRecord)[1]]['sensor']["data"]
         if (sensorOneData == 'Active' && sensorTwoData == 'Fish'){
           console.log("***************************************************************************************")
           console.log(`we are now going to notify relevant parties since there is an Active Fish`)
           console.log("***************************************************************************************")
-          notificationBody = `THERE IS AN ACTIVE FISH. TAKE IMMEDIATE PRECAUTIONARY MEASURES`
-          client.messages.create({
-            to: toNumber,
-            from: fromNumber,
-            body: notificationBody,
-          }, function (err, message) {
-            console.log(err)
-            console.log(message)
-          })
+
           instance.publish("There is an active fish! Look! (°ロ°)-☞  " + dataManager.toString())
             .catch(err => console.log(`Error in publishing timeSince>=timeBetween positive state: ${JSON.stringify(err)}`))
           dataManager.clear()
@@ -117,7 +103,7 @@ nomad.prepareToPublish()
       }
       if (timeSince >= timeThreshold){
         // let them know the node is still online
-       console.log("===================================>   timeSince >= timeThreshold")
+        console.log("===================================>   timeSince >= timeThreshold")
         console.log("***************************************************************************************")
         console.log('Heartbeat, I am alive but have not got data in a long time')
         console.log("***************************************************************************************")
