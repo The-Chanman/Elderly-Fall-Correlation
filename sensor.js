@@ -108,6 +108,7 @@ nomad.prepareToPublish()
           instance.publish(dataManager.toString())
             .catch(err => console.log(`Error in publishing timeSince>=timeBetween negative state: ${JSON.stringify(err)}`))
         }
+        lastPub = currentTime
       }
       if (timeSince >= timeThreshold){
         // let them know the node is still online
