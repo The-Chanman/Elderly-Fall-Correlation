@@ -8,7 +8,7 @@ const subscriptions = ['QmcWzGjo1Zu4yE9NtzBKXNJgEFcVWvgz1ipxtAhwWrvxX5', 'Qmergw
 
 let instance, lastPub, notificationBody
 
-const frequency = 5 * 60 * 1000 // 5 minutes 
+const frequency = 30 * 60 * 1000 // 30 minutes 
 const timeThreshold = 4 * 60 * 60 * 1000 // 4 hours
 
 const defaultPublishData = { 
@@ -34,6 +34,7 @@ class DataMaintainer {
       case subscriptions[0]:{
         this.data[id]["time"] = value.time
         this.data[id]["apple"] = value.results[0]
+        break;
       }
       case subscriptions[1]:{
         let news = value.apple.items
@@ -41,14 +42,15 @@ class DataMaintainer {
         let i = news.length
         while (i--){
           if(news[i].title.toLowerCase().includes("patent")){
-            patents.push(news.splice(i, 1))
+            patents.push(news.splice(i, 1)[0])
           }
         }
         this.data[id]["apple"] = news
         this.data[id]["patents"] = patents
+        break;
       }
       default:{
-        throw new DataSettingException("unrecognized id")
+        throw "unrecognized id"
       }
     }
   }
@@ -96,21 +98,13 @@ nomad.prepareToPublish()
       catch(err){
         console.log("DataMaintainer failed with error of " + err)
       }
-
+      console.log(dataManager.toString())
       let currentTime = getTime()
       let timeSince = currentTime - lastPub
       if (timeSince >= frequency){
         console.log('===================================> timeSince >= timeBetween')
-        if (sensorOneData == 'Active' && sensorTwoData == 'Fish'){
-          console.log("***************************************************************************************")
-          console.log(`we are now going to notify relevant parties since there is an Active Fish`)
-          console.log("***************************************************************************************")
-
-          instance.publish("There is an active fish! Look! (°ロ°)-☞  " + dataManager.toString())
-            .catch(err => console.log(`Error in publishing timeSince>=timeBetween positive state: ${JSON.stringify(err)}`))
-          dataManager.clear()
-          lastPub = currentTime
-        } else if (dataManager.isAllFilled()) {
+        if (dataManager.isAllFilled()) {
+          console.log(dataManager.toString())
           instance.publish(dataManager.toString())
             .catch(err => console.log(`Error in publishing timeSince>=timeBetween negative state: ${JSON.stringify(err)}`))
         }
@@ -121,15 +115,6 @@ nomad.prepareToPublish()
         console.log("***************************************************************************************")
         console.log('Heartbeat, I am alive but have not got data in a long time')
         console.log("***************************************************************************************")
-        messageBody = 'Heartbeat, I am alive but have not got data in a long time'
-        client.messages.create({
-          to: toNumber,
-          from: fromNumber,
-          body: messageBody,
-        }, function (err, message) {
-          console.log(err)
-          console.log(message)
-        })
         instance.publish('Heartbeat, I am alive but have not got data in a long time')
           .catch(err => console.log(`Error in publishing timeSince>=timeBetween: ${JSON.stringify(err)}`))
         dataManager.clear()
