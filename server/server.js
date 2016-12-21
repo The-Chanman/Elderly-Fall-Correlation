@@ -7,7 +7,7 @@ const R = require('ramda')
 const Nomad = require('nomad-stream')
 
 const serverPort = 9000
-const nomadID = 'QmVpDLbk8K3ZDpG3UJqtTircvPu8y1nDdNbaUCuHZ6NLRc'
+const nomadID = 'QmYF8yposVRrAnXMD6UEsSqxkPyVrqB5ZbmJ9PZSEpKSWS'
 const nomad = new Nomad()
 
 let latestMessage = {key: 'value'}
