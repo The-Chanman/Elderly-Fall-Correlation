@@ -83,7 +83,7 @@ let dataManager = new DataMaintainer()
 nomad.prepareToPublish()
   .then((n) => {
     instance = n
-    return instance.publishRoot('Starting up supply chain demo composite')
+    return instance.publishRoot('Starting up Apple Inc. composite')
   })
   .then(() => {
     lastPub = getTime()
