@@ -7,20 +7,25 @@ import s from './styles.css'
 import gs from './../../styles/grid.css'
 import Ship from '../../components/Ship/Ship'
 
+function randomIntBtwNumbers(min, max) {
+    return Math.floor(Math.random() * (max - min + 1) + min)
+}
+
 class CarSpot extends Component {
   render() {
     const left = `${this.props.left}px`
     const top = `${this.props.top}px`
     const theClass = (this.props.isFree)? s.spotFree : s.spotTaken
     return (
+        <div className={s.bernard}>
+        </div>
         <div>
-          <center><h4><strong>What is the state of <a>Apple Inc.</a> today?</strong></h4></center>
+          <center><h4><strong>What we have sniffed out!</strong></h4></center>
          
-          <p>As of <a><span id="time">{this.props.timing}</span></a>, 
-          Apple is doing <a><span id="health">{this.props.doing}</span></a>. 
-          APPL Stocks are currently worth <a><span id="stockvalue">{this.props.LastTrade}</span></a>.
-          Stocks have <a><span id="stockchange">{this.props.stockChange}</span></a> by <a>{this.props.change} </a>
-          since the latest news article about Apple titled <a><span id="articletitle">{this.props.articleList[0].title}</span></a>.</p>
+          <p><span id="recentInteraction">Recent Interactions: {this.props.recentInteraction}</span>&nbsp&nbsp&nbsp&nbsp<span id="sound">Sound: {this.props.sound}</span>&nbsp&nbsp&nbsp&nbsp<span id="elderHeartRate">Heart Rate: {this.props.elderHeartRate}</span>&nbsp&nbsp&nbsp&nbsp<span id="elderLightSensor">Light Sensor: {this.props.elderLightSensor}</span></p>
+          <p><span id="elderGPS">GPS: {this.props.elderGPS}</span>&nbsp&nbsp&nbsp&nbsp<span id="elderAccelerometer">Accelerometer: {this.props.elderAccelerometer}</span>&nbsp&nbsp&nbsp&nbsp<span id="conditions">Weather: {this.props.conditions}</span>&nbsp&nbsp&nbsp&nbsp<span id="windSpeed">Wind Speed: {this.props.windSpeed}</span></p>
+          <p><span id="atmosphere">Atmosphere: {this.props.atmosphere}</span>&nbsp&nbsp&nbsp&nbsp<span id="astronomy">Astronomy: {this.props.astronomy}</span>&nbsp&nbsp&nbsp&nbsp<span id="gasSensor">Gas Sensor: {this.props.gasSensor}</span>&nbsp&nbsp&nbsp&nbsp<span id="water">Water: {this.props.water}</span></p>
+          <p><span id="energySmappee">Energy: {this.props.energySmappee}</span></p>
         </div>
         // <div>
         //   <div className={theClass} style={{left: left, top: top}}>
@@ -59,16 +64,6 @@ class HomePage extends Component {
       console.log(json)
       const parsed = JSON.parse(json)
       debugger
-      // const state = {
-      //     time: parsed['QmcWzGjo1Zu4yE9NtzBKXNJgEFcVWvgz1ipxtAhwWrvxX5']['time'],
-      //     ask: parsed['QmcWzGjo1Zu4yE9NtzBKXNJgEFcVWvgz1ipxtAhwWrvxX5']['apple']['Ask'],
-      //     bid: parsed['QmcWzGjo1Zu4yE9NtzBKXNJgEFcVWvgz1ipxtAhwWrvxX5']['apple']['Bid'],
-      //     change: parsed['QmcWzGjo1Zu4yE9NtzBKXNJgEFcVWvgz1ipxtAhwWrvxX5']['apple']['Change'], 
-      //     changeinPercent: parsed['QmcWzGjo1Zu4yE9NtzBKXNJgEFcVWvgz1ipxtAhwWrvxX5']['apple']['ChangeinPercent'],
-      //     LastTradePriceOnly: parsed['QmcWzGjo1Zu4yE9NtzBKXNJgEFcVWvgz1ipxtAhwWrvxX5']['apple']['LastTradePriceOnly'],
-      //     articles: parsed['QmergwJPmTCEnUyR4gLrjzfKgeBixUbemqoFC78k6sbEZq']['apple']
-      // }
-
       const state = {
         windSpeed: parsed['QmWYaxscTPj79NHLnFEuUbKpZx3d4zHBK2ZRNgqrnF9s5n']['data']['channel']['wind'],
         atmosphere: parsed['QmWYaxscTPj79NHLnFEuUbKpZx3d4zHBK2ZRNgqrnF9s5n']['data']['channel']['atmosphere'],
@@ -91,18 +86,18 @@ class HomePage extends Component {
   }
 
   render() {
-    const doing = (this.state.state.changeinPercent.includes('-')) ? 'poorly' : 'well'
-    const stockchange = (this.state.state.changeinPercent.includes('+')) ? 'increased' : 'decreased'
-    const sound = 
+    const sound = (randomIntBtwNumbers(0,1)) ? 'detected' : 'undetected'
+    const recentInteraction = (randomIntBtwNumbers(0,1)) ? 'Yep' : 'Nope'
     // const price0 = (this.state.state.price)? `$${this.state.state.price}` : ''
     // const price1 = (this.state.state[1].price)? `$${this.state.state[1].price}` : ''
     // const chargeTime0 = (this.state.state.timeCharging)? `Been charging for ${this.state.state.timeCharging.substring(0,6)} minutes` : ''
     // const chargeTime1 = (this.state.state[1].timeCharging)? `Been charging for ${this.state.state[1].timeCharging.substring(0,6)} minutes` : ''
-
+    // const doing = (this.state.state.changeinPercent.includes('-')) ? 'poorly' : 'well'
+    // const stockchange = (this.state.state.changeinPercent.includes('+')) ? 'increased' : 'decreased'
 
     return (
       <div>
-        <CarSpot doing={doing} stockChange={stockchange} timing={this.state.state.time} left="100" top="100" ask={this.state.state.ask} bid={this.state.state.bid} change={this.state.state.change} changePercent={this.state.state.changeinPercent} LastTrade={this.state.state.LastTradePriceOnly} articleList={this.state.state.articles}/>
+        <CarSpot sound={sound} recentInteraction={recentInteraction} windSpeed={this.state.state.windSpeed} left="100" top="100" atmosphere={this.state.state.atmosphere} astronomy={this.state.state.astronomy} conditions={this.state.state.conditions} elderHeartRate={this.state.state.elderHeartRate} elderLightSensor={this.state.state.elderLightSensor} elderGPS={this.state.state.elderGPS} elderAccelerometer={this.state.state.elderAccelerometer} gasSensor={this.state.state.gasSensor} energySmappee={this.state.state.energySmappee} water={this.state.state.water}/>
       </div>
     )
   }
