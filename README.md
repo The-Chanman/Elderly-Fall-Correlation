@@ -1,5 +1,5 @@
-# Apple Nomad Composite node. 
-Demo showing the first ever living document that pulls from nodes that pull from sources across the internet to create an agregator for apple based on news, patents, quotes, and stock market data.
+# Bernard Correlation website. 
+Demo showing the second ever living document that pulls from nodes that pull from sources across the internet to create a guardian spirit for the elderly by pulling all sorts of information.
 
 To run it first clone this repo.
 

@@ -36,7 +36,7 @@ class HomePage extends Component {
   constructor(props) {
     super(props)
     this.state = {state: 
-      { time: '', ask: '', bid: '', change: '', changeinPercent: '', LastTradePriceOnly: '', articles: [{title: "NA"}]}
+      { windSpeed: '', atmosphere: '', astronomy: '', conditions: '', elderHeartRate: '', elderLightSensor: '', elderGPS: '', elderAccelerometer: '', gasSensor: {}, energySmappee: {}, water: {}}
     }
   }
 
@@ -58,26 +58,29 @@ class HomePage extends Component {
       // ]
       console.log(json)
       const parsed = JSON.parse(json)
-      // const state = R.map(value => {
-      //   return {
-          // time: value['QmcWzGjo1Zu4yE9NtzBKXNJgEFcVWvgz1ipxtAhwWrvxX5']['time'],
-          // ask: value['QmcWzGjo1Zu4yE9NtzBKXNJgEFcVWvgz1ipxtAhwWrvxX5']['apple']['Ask'],
-          // bid: value['QmcWzGjo1Zu4yE9NtzBKXNJgEFcVWvgz1ipxtAhwWrvxX5']['apple']['Bid'],
-          // change: value['QmcWzGjo1Zu4yE9NtzBKXNJgEFcVWvgz1ipxtAhwWrvxX5']['apple']['Change'], 
-          // changeinPercent: value['QmcWzGjo1Zu4yE9NtzBKXNJgEFcVWvgz1ipxtAhwWrvxX5']['apple']['ChangeinPercent'],
-          // LastTradePriceOnly: value['QmcWzGjo1Zu4yE9NtzBKXNJgEFcVWvgz1ipxtAhwWrvxX5']['apple']['LastTradePriceOnly'],
-          // articles: value['QmergwJPmTCEnUyR4gLrjzfKgeBixUbemqoFC78k6sbEZq']['apple']
-      //   }
-      // }, R.values(parsed))
       debugger
+      // const state = {
+      //     time: parsed['QmcWzGjo1Zu4yE9NtzBKXNJgEFcVWvgz1ipxtAhwWrvxX5']['time'],
+      //     ask: parsed['QmcWzGjo1Zu4yE9NtzBKXNJgEFcVWvgz1ipxtAhwWrvxX5']['apple']['Ask'],
+      //     bid: parsed['QmcWzGjo1Zu4yE9NtzBKXNJgEFcVWvgz1ipxtAhwWrvxX5']['apple']['Bid'],
+      //     change: parsed['QmcWzGjo1Zu4yE9NtzBKXNJgEFcVWvgz1ipxtAhwWrvxX5']['apple']['Change'], 
+      //     changeinPercent: parsed['QmcWzGjo1Zu4yE9NtzBKXNJgEFcVWvgz1ipxtAhwWrvxX5']['apple']['ChangeinPercent'],
+      //     LastTradePriceOnly: parsed['QmcWzGjo1Zu4yE9NtzBKXNJgEFcVWvgz1ipxtAhwWrvxX5']['apple']['LastTradePriceOnly'],
+      //     articles: parsed['QmergwJPmTCEnUyR4gLrjzfKgeBixUbemqoFC78k6sbEZq']['apple']
+      // }
+
       const state = {
-          time: parsed['QmcWzGjo1Zu4yE9NtzBKXNJgEFcVWvgz1ipxtAhwWrvxX5']['time'],
-          ask: parsed['QmcWzGjo1Zu4yE9NtzBKXNJgEFcVWvgz1ipxtAhwWrvxX5']['apple']['Ask'],
-          bid: parsed['QmcWzGjo1Zu4yE9NtzBKXNJgEFcVWvgz1ipxtAhwWrvxX5']['apple']['Bid'],
-          change: parsed['QmcWzGjo1Zu4yE9NtzBKXNJgEFcVWvgz1ipxtAhwWrvxX5']['apple']['Change'], 
-          changeinPercent: parsed['QmcWzGjo1Zu4yE9NtzBKXNJgEFcVWvgz1ipxtAhwWrvxX5']['apple']['ChangeinPercent'],
-          LastTradePriceOnly: parsed['QmcWzGjo1Zu4yE9NtzBKXNJgEFcVWvgz1ipxtAhwWrvxX5']['apple']['LastTradePriceOnly'],
-          articles: parsed['QmergwJPmTCEnUyR4gLrjzfKgeBixUbemqoFC78k6sbEZq']['apple']
+        windSpeed: parsed['QmWYaxscTPj79NHLnFEuUbKpZx3d4zHBK2ZRNgqrnF9s5n']['data']['channel']['wind'],
+        atmosphere: parsed['QmWYaxscTPj79NHLnFEuUbKpZx3d4zHBK2ZRNgqrnF9s5n']['data']['channel']['atmosphere'],
+        astronomy: parsed['QmWYaxscTPj79NHLnFEuUbKpZx3d4zHBK2ZRNgqrnF9s5n']['data']['channel']['astronomy'],
+        conditions: parsed['QmWYaxscTPj79NHLnFEuUbKpZx3d4zHBK2ZRNgqrnF9s5n']['data']['channel']['item']['condition'],
+        elderHeartRate: parsed['QmXUHQ2KBmSxaiEbB5eFVGGmSsPnd5KpnRqGWvtFUjWo5a']['data']['heartRate'],
+        elderLightSensor: parsed['QmXUHQ2KBmSxaiEbB5eFVGGmSsPnd5KpnRqGWvtFUjWo5a']['data']['lightSensor'],
+        elderGPS: parsed['QmXUHQ2KBmSxaiEbB5eFVGGmSsPnd5KpnRqGWvtFUjWo5a']['data']['gps'],
+        elderAccelerometer: parsed['QmXUHQ2KBmSxaiEbB5eFVGGmSsPnd5KpnRqGWvtFUjWo5a']['data']['accelerometer'],
+        gasSensor: parsed['QmdhnZLVkkPyEoyxGf238pPPMsKNjPS3cC3sFzSW3cbnQA']['gasSensor'],
+        energySmappee: parsed['QmdhnZLVkkPyEoyxGf238pPPMsKNjPS3cC3sFzSW3cbnQA']['smappee'],
+        water: parsed['QmdhnZLVkkPyEoyxGf238pPPMsKNjPS3cC3sFzSW3cbnQA']['water']
       }
 
       _this.setState({state})
@@ -90,10 +93,13 @@ class HomePage extends Component {
   render() {
     const doing = (this.state.state.changeinPercent.includes('-')) ? 'poorly' : 'well'
     const stockchange = (this.state.state.changeinPercent.includes('+')) ? 'increased' : 'decreased'
+    const sound = 
     // const price0 = (this.state.state.price)? `$${this.state.state.price}` : ''
     // const price1 = (this.state.state[1].price)? `$${this.state.state[1].price}` : ''
     // const chargeTime0 = (this.state.state.timeCharging)? `Been charging for ${this.state.state.timeCharging.substring(0,6)} minutes` : ''
     // const chargeTime1 = (this.state.state[1].timeCharging)? `Been charging for ${this.state.state[1].timeCharging.substring(0,6)} minutes` : ''
+
+
     return (
       <div>
         <CarSpot doing={doing} stockChange={stockchange} timing={this.state.state.time} left="100" top="100" ask={this.state.state.ask} bid={this.state.state.bid} change={this.state.state.change} changePercent={this.state.state.changeinPercent} LastTrade={this.state.state.LastTradePriceOnly} articleList={this.state.state.articles}/>
