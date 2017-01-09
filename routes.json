@@ -5,7 +5,7 @@
     "chunk": "main"
   },
   {
-    "path": "/stupid-tree",
+    "path": "/falldetection",
     "page": "./pages/article",
     "chunk": "main"
   },

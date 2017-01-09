@@ -29,10 +29,10 @@ class CarSpot extends Component {
                 <span id="recentInteraction" className={(this.props.recentInteraction) ? s.positive : s.negative}>Recent Interactions: {this.props.recentInteraction ? 'Yep' : 'Nope'}</span>&emsp;&emsp;<span id="sound" className={(this.props.sound) ? s.positive : s.negative}>Sound: {this.props.sound ? 'detected' : 'undetected'}</span>&emsp;&emsp;<span id="elderHeartRate">Heart Rate: {this.props.elderHeartRate} bpm</span>&emsp;&emsp;<span id="elderLightSensor">Light Sensor: {this.props.elderLightSensor} lux</span>
               </p>
               <p>
-                <span id="humidity">Humidity: {this.props.humidity} %</span>&emsp;&emsp;<span id="pressure">Air pressure: {this.props.pressure} torr</span>&emsp;&emsp;<span id="visibility">Weather Visibility: {this.props.visibility / 100} miles</span>&emsp;&emsp;<span id="sunrise">Time of Sunrise: {this.props.sunrise}</span>
+                <span id="humidity">Humidity: {this.props.humidity} %</span>&emsp;&emsp;<span id="pressure">Air pressure: {this.props.pressure} torr</span>&emsp;&emsp;<span id="visibility">Weather Visibility: {(this.props.visibility / 100).toFixed(5)} miles</span>&emsp;&emsp;<span id="sunrise">Time of Sunrise: {this.props.sunrise}</span>
               </p>
               <p>
-                <span id="weatherTemp">Temperature at GPS location: {this.props.weatherTemp} °F</span>&emsp;&emsp;<span id="weatherText">Weather Description: {this.props.weatherText}</span>&emsp;&emsp;<span id="windSpeed">Wind Speed: {this.props.windSpeed} mph</span>&emsp;&emsp;<span id="sunset">Time of sunset: {this.props.sunset}</span>
+                <span id="weatherTemp">Temperature at GPS location: {this.props.weatherTemp} °F</span>&emsp;&emsp;<span id="weatherText">Weather Description: {this.props.weatherText}</span>&emsp;&emsp;<span id="windSpeed">Wind Speed: {this.props.windSpeed} mph</span>&emsp;&emsp;<span id="sunset">Time of Sunset: {this.props.sunset}</span>
               </p>
               <p>
                 <span id="GPSlat">GPS Latitude: {this.props.GPSlat}</span>&emsp;&emsp;<span id="GPSlong">GPS Longitude: {this.props.GPSlong}</span>&emsp;&emsp;<span id="xAccel">X Acceleration: {this.props.xAccel}</span>&emsp;&emsp;<span id="yAccel">Y Acceleration: {this.props.yAccel}</span>&emsp;&emsp;<span id="zAccel">Z Acceleration: {this.props.zAccel}</span>
@@ -43,14 +43,156 @@ class CarSpot extends Component {
               <p>
                 <span id="elecMain">Live Total Energy Pull: {this.props.elecMain} Watts</span>&emsp;&emsp;<span id="elecUsage">Energy Used today: {this.props.elecUsage} Watt Hours</span>&emsp;&emsp;<span id="waterMain"> Water Used: {this.props.waterMain} gallons</span>
               </p>
-              <h1><strong>Correlations</strong></h1>
-              <h3>Things are looking good</h3>
-            </center>
+              <h1><strong>AI Generated Correlations</strong></h1>
+              <table width={'100%'}>
+                <tr>
+                  <th>Fall Detection</th>
+                   <th>Getting good sleep</th>
+                   <th>Prescription Compliance</th>
+                   <th>Asthma Attack</th>
+                </tr>
+                <tbody>
+                  <tr>
+                    <td>Sound + Heartrate + Accelerometer + Camera + Body Temperature + GPS + IR + Weather + Gas Sensor</td>
+                    <td>Sound + Heartrate + Accelerometer + Camera + Body Temperature + GPS + Digital Usage + Time + Weight</td>
+                    <td>Water Usage + Weight + Camera + Geiger counter</td>
+                    <td>Sound + Heartrate + Camera + Weather + Air Particulants</td>
+                  </tr>
+                 </tbody> 
+              </table>
+            </center>            
+          </div>
+          <div className={s.falldetection}>
+            <strong>Fall Detection Node Chain</strong>
+            <h2>Basic Fall Detection</h2>
+            <div className={s.card}>
+              <div className={s.subTitle}>
+                <h3>Accelerometer</h3>
+              </div>
+              <div className={s.information}>
+                <p>
+                  <span id="xAccel">X Acceleration: {this.props.xAccel}</span>&emsp;&emsp;<span id="yAccel">Y Acceleration: {this.props.yAccel}</span>&emsp;&emsp;<span id="zAccel">Z Acceleration: {this.props.zAccel}</span>
+                </p>
+              </div>
+            </div>
+            <div className={s.card}>
+              <div className={s.subTitle}>
+                <h3>Heart Rate</h3>
+              </div>
+              <div className={s.information}>
+                <p>
+                  <span id="xAccel">Heart Rate: {this.props.elderHeartRate}</span>
+                </p>
+              </div>
+            </div>
+            <div className={s.card}>
+              <div className={s.subTitle}>
+                <h3>Sound</h3>
+              </div>
+              <div className={s.information}>
+                <p>
+                  {this.props.sound ? 'Distrubance' : 'Nothing unusual'}
+                </p>
+              </div>
+            </div>
+            <div className={s.card}>
+              <div className={s.subTitle}>
+                <h3>Body Temperature</h3>
+              </div>
+              <div className={s.information}>
+                <p>
+                  {randomIntBtwNumbers(96,99)}
+                </p>
+              </div>
+            </div>
+            <h2>Advanced Fall Confirmation</h2>
+            <div className={s.card}>
+              <div className={s.subTitle}>
+                <h3>GPS</h3>
+              </div>
+              <div className={s.information}>
+                <p>
+                  Latitude: {this.props.GPSlat}&emsp;&emsp; Longitude: {this.props.GPSlong}
+                </p>
+              </div>
+            </div>
+            <div className={s.card}>
+              <div className={s.subTitle}>
+                <h3>Camera</h3>
+              </div>
+              <div className={s.information}>
+                <p>
+                  {this.props.sound ? 'refer to image 1' : 'refer to image 2'}
+                </p>
+              </div>
+            </div>
+            <div className={s.card}>
+              <div className={s.subTitle}>
+                <h3>Infrared</h3>
+              </div>
+              <div className={s.information}>
+                <p>
+                  {(randomIntBtwNumbers(0,1)) ? 'Found' : 'Unfound'}
+                </p>
+              </div>
+            </div>
+            <h2>Context Setting Confirmation</h2>
+            <div className={s.card}>
+              <div className={s.subTitle}>
+                <h3>Water Usage</h3>
+              </div>
+              <div className={s.information}>
+                <p>
+                  {this.props.waterMain + " gallons"}
+                </p>
+              </div>
+            </div>
+            <div className={s.card}>
+              <div className={s.subTitle}>
+                <h3>Energy Usage</h3>
+              </div>
+              <div className={s.information}>
+                <p>
+                  {this.props.elecMain + " watts"}
+                </p>
+              </div>
+            </div>
+            <div className={s.card}>
+              <div className={s.subTitle}>
+                <h3>Weather</h3>
+              </div>
+              <div className={s.information}>
+                <p>
+                Humidity: {this.props.humidity + "%"} &emsp;&emsp;Air pressure: {this.props.pressure} torr&emsp;&emsp;Weather Visibility: {(this.props.visibility / 100).toFixed(5)} miles&emsp;&emsp;Temperature at GPS location: {this.props.weatherTemp} °F&emsp;&emsp;Weather Description: {this.props.weatherText}&emsp;&emsp;Wind Speed: {this.props.windSpeed} mph&emsp;&emsp;Time of Sunset: {this.props.sunset}&emsp;&emsp; Time of Sunrise: {this.props.sunrise}
+                </p>
+              </div>
+            </div>
+            <div className={s.card}>
+              <div className={s.subTitle}>
+                <h3>House Gas Sensor</h3>
+              </div>
+              <div className={s.information}>
+                <p>
+                  <span id="O3">O3: {this.props.O3 + " ppm"}</span>&emsp;&emsp;<span id="CO">CO : {this.props.CO + " ppm"}</span>&emsp;&emsp;<span id="CO2">CO2: {this.props.CO2 + " ppm"}</span>&emsp;&emsp;<span id="NO">NO : {this.props.NO + " ppm"}</span>&emsp;&emsp;<span id="NO2">NO2: {this.props.NO2 + " ppm"}</span>&emsp;&emsp;<span id="CH4">CH4: {this.props.CH4 + " ppm"}</span>&emsp;&emsp;<span id="H2">H2: {this.props.H2 + " ppm"}</span>
+                </p>
+              </div>
+            </div>
+            <div className={s.card}>
+              <div className={s.subTitle}>
+                <h3>Home Device Light Sensor</h3>
+              </div>
+              <div className={s.information}>
+                <p>
+                  {this.props.elderLightSensor + " lux"}
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       )
   }
 }
+
 
 class HomePage extends Component {
   constructor(props) {
